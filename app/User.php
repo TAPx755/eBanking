@@ -9,12 +9,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
 
-    public function account()
+    use Notifiable;
+
+    public function Account()
     {
-        return $this->hasOne('App\Account');
+        return $this->belongsTo(User::class);
+    }
+    public function addAccount($account){
+        $this->account()->create($account);
     }
 
-    use Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -31,7 +36,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'privilege',
     ];
 
     /**
